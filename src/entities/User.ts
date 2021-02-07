@@ -7,7 +7,10 @@ import {
   Index,
   CreateDateColumn,
   UpdateDateColumn,
+  BeforeInsert,
 } from "typeorm";
+import bcrypt from "bcrypt";
+import { classToPlain, Exclude } from "class-transformer";
 
 @Entity("users")
 export class User extends BaseEntity {
@@ -15,6 +18,8 @@ export class User extends BaseEntity {
     super();
     Object.assign(this, user);
   }
+
+  @Exclude()
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -30,6 +35,7 @@ export class User extends BaseEntity {
 
   @Index()
   @Length(6)
+  @Exclude()
   @Column()
   password: string;
 
@@ -38,4 +44,14 @@ export class User extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await bcrypt.hash(this.password, 6);
+  }
+
+  // overide toJson
+  toJSON() {
+    return classToPlain(this);
+  }
 }
