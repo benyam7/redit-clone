@@ -1,5 +1,21 @@
-import { NextFunction } from "express";
-
 import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
 
-export default async (req: Request, res: Response, next: NextFunction) => {};
+import { User } from "../entities/User";
+
+export default async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const token = req.cookies.token; // by cookie-parser
+    if (!token) throw new Error("Unauthenticated");
+
+    const { username }: any = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findOne({ username });
+
+    if (!username) throw new Error("Unauthenticated");
+    return res.json(user);
+  } catch (err) {
+    console.log(err);
+    return res.status(401).json({ error: "Un authenticated" });
+  }
+};
