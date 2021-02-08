@@ -5,7 +5,7 @@ import { User } from "../entities/User";
 
 export default async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const token = req.cookies.token; // by cookie-parser
+    const token = req.cookies.token; // cookie parsed by cookie-parser
     if (!token) throw new Error("Unauthenticated");
 
     const { username }: any = jwt.verify(token, process.env.JWT_SECRET);
@@ -13,7 +13,9 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     const user = await User.findOne({ username });
 
     if (!username) throw new Error("Unauthenticated");
-    return res.json(user);
+
+    res.locals.user = user;
+    return next();
   } catch (err) {
     console.log(err);
     return res.status(401).json({ error: "Un authenticated" });

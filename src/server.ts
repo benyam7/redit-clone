@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.get("/", (req, res) => res.send("hello "));
 app.use("/api/auth", authRoutes);
 
-app.listen(5000, async () => {
+app.listen(process.env.PORT, async () => {
   console.log("Server running");
 
   try {
