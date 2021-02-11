@@ -35,8 +35,22 @@ const createPost = async (req: Request, res: Response) => {
   }
 };
 
+const getPosts = async (_: Request, res: Response) => {
+  try {
+    const posts = await Post.find({
+      order: { createdAt: 'DESC' },
+      // relations: ['sub',]
+    })
+    return res.json(posts)
+  } catch (err) {
+    console.log(err)
+    return res.json({ error: 'Something went wrong' })
+  }
+}
+
 const router = Router();
 
 router.post("/", auth, createPost);
+router.get('/', getPosts)
 
 export default router;

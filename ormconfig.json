@@ -5,8 +5,8 @@
    "username": "postgres",
    "password": "Iamno-1",
    "database": "reddit",
-   "synchronize": true, 
-   "logging": true, 
+   "synchronize": false,
+   "logging": true,
    "entities": [
       "src/entities/**/*.ts"
    ],
