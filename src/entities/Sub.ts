@@ -26,6 +26,11 @@ export default class Sub extends Entity {
 
 
     @Index()
+    @Column({ nullable: true })
+    title: string
+
+
+    @Index()
     @Column({ type: 'text', nullable: true })
     description: string
 

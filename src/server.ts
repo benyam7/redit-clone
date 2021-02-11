@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 
 import authRoutes from "./routes/auth";
 import postRoutes from "./routes/post";
+import subRoutes from "./routes/sub";
 
 import trim from "./middleware/trim";
 
@@ -23,6 +24,7 @@ app.use(cookieParser());
 app.get("/", (req, res) => res.send("hello "));
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/subs", subRoutes);
 
 app.listen(PORT, async () => {
   console.log("Server running");
