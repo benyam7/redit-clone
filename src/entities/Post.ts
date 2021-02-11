@@ -3,7 +3,6 @@ import {
   Column,
   Index,
   BeforeInsert,
-  ManyToMany,
   ManyToOne,
   JoinColumn,
 } from "typeorm";
