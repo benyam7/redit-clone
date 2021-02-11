@@ -1,6 +1,49 @@
-import {Entity} from "typeorm";
+import {
+  Entity as TOEntity,
+  Column,
+  Index,
+  BeforeInsert,
+  ManyToMany,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
 
-@Entity()
-export class Post {
+import Entity from "./Entity";
+import User from "./User";
+import { makeid, slugify } from "../utils/util";
 
+@TOEntity("posts")
+export default class Post extends Entity {
+  constructor(post: Partial<Post>) {
+    super();
+    Object.assign(this, post);
+  }
+
+  @Index()
+  @Column()
+  identitfier: string; // 7 char id
+
+  @Index()
+  @Column()
+  title: string;
+
+  @Index()
+  @Column()
+  slug: string;
+
+  @Column({ nullable: true, type: "text" })
+  body: string;
+
+  @Column()
+  subName: string;
+
+  @ManyToOne(() => User, (user) => user.posts)
+  @JoinColumn({ name: "username", referencedColumnName: "username" })
+  user: User;
+
+  @BeforeInsert()
+  makeIdAndSlug() {
+    this.identitfier = makeid(7);
+    this.slug = slugify(this.title);
+  }
 }
