@@ -5,6 +5,7 @@ import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import authRoutes from "./routes/auth";
 import postRoutes from "./routes/post";
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(trim);
 app.use(cookieParser());
+app.use(cors());
 
 app.get("/", (_, res) => res.send("hello "));
 app.use("/api/auth", authRoutes);
