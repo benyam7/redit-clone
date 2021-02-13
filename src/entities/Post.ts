@@ -15,6 +15,7 @@ import { makeid, slugify } from "../utils/util";
 import Sub from "./Sub";
 import Comment from "./Comment";
 import { Expose } from "class-transformer";
+import Vote from "./Vote";
 
 @TOEntity("posts")
 export default class Post extends Entity {
@@ -55,6 +56,9 @@ export default class Post extends Entity {
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
 
+  @OneToMany(() => Vote, (vote) => vote.post)
+  votes: Vote[];
+
   @BeforeInsert()
   makeIdAndSlug() {
     this.identitfier = makeid(7);
@@ -62,7 +66,7 @@ export default class Post extends Entity {
   }
 
   @Expose() get url(): string {
-    return `/r/${this.subName}/${this.identitfier}/${this.slug}`; 
+    return `/r/${this.subName}/${this.identitfier}/${this.slug}`;
   }
   // protected url: string;
   // @AfterLoad()
