@@ -37,8 +37,9 @@ const vote = async (req: Request, res: Response) => {
       //   if vote is for comment
       if (comment) vote.comment = comment;
       //   if vote is for post
-      if (post) vote.post = post;
-      await vote.save();
+      else vote.post = post;
+
+      if (post) await vote.save();
     } else if (value === 0) {
       // vote exists already n value 0
       await vote.remove();
@@ -52,9 +53,10 @@ const vote = async (req: Request, res: Response) => {
 
     post = await Post.findOneOrFail(
       { identitfier, slug },
-      { relations: ["comments", "sub", "votes"] }
+      { relations: ["comments", "comments.votes", "sub", "votes"] }
     );
-
+    post.setUserVote(user);
+    post.comments.forEach((c) => c.setUserVote(user));
     return res.json(post);
   } catch (err) {
     console.log(err);

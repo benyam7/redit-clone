@@ -68,6 +68,20 @@ export default class Post extends Entity {
   @Expose() get url(): string {
     return `/r/${this.subName}/${this.identitfier}/${this.slug}`;
   }
+
+  @Expose() get commentCount(): number {
+    return this.comments?.length;
+  }
+
+  @Expose() get voteScore(): number {
+    return this.votes?.reduce((prev, cur) => prev + (cur.value || 0), 0);
+  }
+
+  protected userVote: number;
+  setUserVote(user: User) {
+    const index = this.votes?.findIndex((v) => v.username === user.username);
+    this.userVote = index > -1 ? this.votes[index].value : 0;
+  }
   // protected url: string;
   // @AfterLoad()
   // createFields() {
