@@ -1,10 +1,10 @@
 import {
-    Entity as TOEntity,
-    Column,
-    Index,
-    ManyToOne,
-    JoinColumn,
-    OneToMany,
+  Entity as TOEntity,
+  Column,
+  Index,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
 } from "typeorm";
 
 import Entity from "./Entity";
@@ -14,49 +14,38 @@ import Post from "./Post";
 
 @TOEntity("subs")
 export default class Sub extends Entity {
-    constructor(sub: Partial<Sub>) {
-        super();
-        Object.assign(this, sub);
-    }
+  constructor(sub: Partial<Sub>) {
+    super();
+    Object.assign(this, sub);
+  }
 
+  @Index()
+  @Column({ unique: true })
+  name: string;
 
-    @Index()
-    @Column({ unique: true })
-    name: string
+  @Index()
+  @Column({ nullable: true })
+  title: string;
 
+  @Index()
+  @Column({ type: "text", nullable: true })
+  description: string;
 
-    @Index()
-    @Column({ nullable: true })
-    title: string
+  @Index()
+  @Column({ nullable: true })
+  imageUrn: string;
 
+  @Index()
+  @Column({ nullable: true })
+  bannerUrn: string;
 
-    @Index()
-    @Column({ type: 'text', nullable: true })
-    description: string
+  @Column()
+  username: string;
 
-    @Index()
-    @Column({ nullable: true })
-    imageUrn: string
+  @ManyToOne(() => User)
+  @JoinColumn({ name: "username", referencedColumnName: "username" })
+  user: User;
 
-
-    @Index()
-    @Column({ nullable: true })
-    bannerUrn: string
-
-
-    @ManyToOne(() => User)
-    @JoinColumn({ name: "username", referencedColumnName: "username" })
-    user: User;
-
-
-    @OneToMany(() => Post, post => post.sub)
-    posts: Post[]
-
-
-
-
-
-
-
-
+  @OneToMany(() => Post, (post) => post.sub)
+  posts: Post[];
 }
