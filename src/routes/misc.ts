@@ -67,8 +67,6 @@ const vote = async (req: Request, res: Response) => {
   }
 };
 
-const imageUrlExp = `COALESCE ('${process.env.APP_URL}/images/'  || s."imageUrn", 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y') `;
-
 const topSubs = async (_: Request, res: Response) => {
   try {
     const imageUrlExp = `COALESCE('${process.env.APP_URL}/images/' || s."imageUrn" , 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y')`;
@@ -83,8 +81,6 @@ const topSubs = async (_: Request, res: Response) => {
       .orderBy(`"postCount"`, "DESC")
       .limit(5)
       .execute();
-
-    return res.json(subs);
 
     return res.json(subs);
   } catch (err) {
