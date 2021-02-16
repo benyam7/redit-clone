@@ -1,6 +1,12 @@
-# Redit clone server 
 
-Features:
+# Redit clone server 
+server app for reddit clone :). Made with ❤
+
+# Demo
+![News App Demo](demo/red-demo.gif)
+
+
+## Features:
 - authentication
 - authorization
 - pagination with infinite scroll
@@ -10,7 +16,7 @@ Features:
 - search
 
 
-Built with:
+## Built with:
 - Typescript
 - express
 - PostgreSQL
@@ -23,7 +29,7 @@ Built with:
 
 Live app link: comming soon :)
 
-Demo here: 
+
 
 Steps to run this project:
 
