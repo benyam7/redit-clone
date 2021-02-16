@@ -3,7 +3,7 @@
 server app for reddit clone :). Made with ❤
 
 # Demo
-![News App Demo](demo/red-demo.gif)
+![Reddit clone demo](demo/red-demo.gif)
 
 
 ## Features:
